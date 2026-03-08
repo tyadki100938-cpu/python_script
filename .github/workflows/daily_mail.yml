@@ -2,7 +2,7 @@ name: Run Python Email Script
 
 on:
   schedule:
-    - cron: '40 14 * * *' # 日本時間 23:40
+    - cron: '05 15 * * *' # 日本時間 24:05
   workflow_dispatch: # 手動実行用ボタン
 
 jobs:
