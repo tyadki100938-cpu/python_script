@@ -7,7 +7,7 @@ def send_mail():
     # GitHub Secretsから環境変数を読み込む
     gmail_user = os.getenv("GMAIL_USER")
     gmail_password = os.getenv("GMAIL_PASSWORD")
-    to_email = gmail_user # 送信先
+    to_email = os.getenv("GMAIL_USER") # 送信先
 
     # メールの設定
     msg = MIMEMultipart()
