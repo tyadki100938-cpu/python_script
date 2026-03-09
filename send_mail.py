@@ -20,7 +20,7 @@ def fetch_korean_words():
 
     # model名はそのままで大丈夫です
     response = client.models.generate_content(
-        model="gemini-1.5-flash", 
+        model="models/gemini-2.0-flash", 
         contents=prompt
     )
     
