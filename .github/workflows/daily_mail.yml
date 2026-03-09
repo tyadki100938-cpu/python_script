@@ -20,9 +20,6 @@ jobs:
       - name: Install dependencies
         run: pip install -U google-genai
 
-      - name: Wait for 30 seconds to avoid API congestion
-        run: sleep 30  # 実行前に30秒だけ待機
-
       - name: Run script
         env:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
