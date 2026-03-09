@@ -5,22 +5,25 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 def fetch_korean_words():
-    # APIキーの設定
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         raise ValueError("GEMINI_API_KEY is not set.")
 
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    # 【修正ポイント1】 configure ではなく Client を作成する
+    client = genai.Client(api_key=api_key)
 
-    # プロンプト（今後ここを書き換えて機能を増やせる）
     prompt = """
-    韓国語の日常会話で役立つ単語を10個教えてください。
+    韓国語の日常会話でよく使う単語を10個教えてください。
     以下のフォーマットで出力してください：
     1. [単語] (読み) : [意味]
     """
 
-    response = model.generate_content(prompt)
+    # 【修正ポイント2】 client.models.generate_content を使う
+    response = client.models.generate_content(
+        model='gemini-1.5-flash',
+        contents=prompt
+    )
+    
     return response.text
 
 def send_mail():
