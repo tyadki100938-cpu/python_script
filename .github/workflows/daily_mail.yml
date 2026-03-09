@@ -18,7 +18,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install -q -U google-genai # 新しいSDKに変更
+        run: pip install -U google-genai
 
       - name: Run script
         env:
