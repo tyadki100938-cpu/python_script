@@ -1,5 +1,7 @@
 import smtplib
 import os
+import random
+import datetime
 from google import genai # import文が変わります
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -15,9 +17,43 @@ def fetch_korean_words():
         api_key=api_key,
         vertexai=False 
     )
-    
-    prompt = "韓国語の日常会話でよく使う単語を10個教えてください。1. [単語] (読み) : [意味] の形式で。"
 
+    # 1. 10個のパーソナライズされたトピック
+    topics = [
+        "韓国の最新トレンド・SNS新造語",
+        "カフェ巡りやグルメ、食レポで使える表現",
+        "韓国ドラマの感情豊かなセリフ・恋愛表現",
+        "ビジネスメール・オフィスでの敬語",
+        "IT・テクノロジー・ガジェットに関する用語",
+        "旅行中のトラブル解決・現地の人との交流",
+        "性格や感情を細かく表す副詞・形容詞",
+        "ファッション・美容・コスメに関する専門用語",
+        "料理のレシピや味の表現（食感など）",
+        "K-POPの歌詞によく出る詩的な表現"
+    ]
+    
+    # 2. 実行ごとにランダムに選択
+    selected_topic = random.choice(topics)
+    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    
+    # 3. 動的なプロンプトの組み立て
+    prompt = f"""
+    あなたはパーソナライズされた韓国語講師です。
+    実行時刻: {current_time}
+    
+    今回の重点テーマ: 【{selected_topic}】
+    
+    上記テーマに沿った、中〜上級レベルの韓国語単語を「10個」教えてください。
+    
+    【出力ルール】
+    1. 超基本単語（안녕하세요, 감사합니다 等）は絶対に含めない。
+    2. 以下のフォーマットで出力すること：
+       - 単語(ハングル) / 読み(カタカナ) / 意味
+       - その単語を使った実用的な例文（日本語訳付き）
+    3. 10個のうち2個は、そのテーマに関連する「最新の流行語」や「慣用句」を混ぜてください。
+    4. 重複を避けるため、独自の選定アルゴリズムを用いて、前回の出力とは異なる語彙を選んでください。
+    """
+    
     # model名はそのままで大丈夫です
     response = client.models.generate_content(
         model="models/gemini-2.5-flash", 
