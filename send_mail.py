@@ -1,6 +1,6 @@
 import smtplib
 import os
-import google.generativeai as genai
+from google import genai # import文が変わります
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
