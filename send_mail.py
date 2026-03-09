@@ -8,21 +8,24 @@ import os
 from google import genai
 from google.genai import types # 念のため型定義も
 
+import os
+from google import genai
+
 def fetch_korean_words():
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         raise ValueError("GEMINI_API_KEY is not set.")
 
-    # クライアント初期化時に 'google-ai' モードであることを明示する
-    # これにより v1beta ではなく最新の安定版(v1)が使われるようになります
+    # 【重要】 vertexai=False を指定することで、
+    # Google AI Studio の API キーモードであることを明示します
     client = genai.Client(
         api_key=api_key,
-        http_options={'api_version': 'v1'} # ここが重要！
+        vertexai=False 
     )
     
     prompt = "韓国語の日常会話でよく使う単語を10個教えてください。1. [単語] (読み) : [意味] の形式で。"
 
-    # モデル名に models/ を付け、明示的に呼び出す
+    # model名はそのままで大丈夫です
     response = client.models.generate_content(
         model='gemini-1.5-flash', 
         contents=prompt
