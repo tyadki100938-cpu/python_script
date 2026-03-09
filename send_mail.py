@@ -4,13 +4,6 @@ from google import genai # import文が変わります
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-import os
-from google import genai
-from google.genai import types # 念のため型定義も
-
-import os
-from google import genai
-
 def fetch_korean_words():
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
