@@ -84,10 +84,10 @@ def send_mail():
     msg = MIMEMultipart()
     msg['From'] = gmail_user
     msg['To'] = to_email
-    msg['Subject'] = "Pythonスクリプトからの自動送信"
 
     body = generate_study_material()
     msg.attach(MIMEText(body, 'plain'))
+    msg['Subject'] = body.split('\n')[0] if body else "学習コンテンツ"
 
     try:
         # GmailのSMTPサーバーに接続
@@ -98,10 +98,10 @@ def send_mail():
         print("Email sent successfully!")
     except Exception as e:
         print(f"Error: {e}")
+    
+    # 結果をファイルに保存（GitHub ActionsでIssueにするため）
+    with open("result.md", "w", encoding="utf-8") as f:
+        f.write(body)
 
 if __name__ == "__main__":
     send_mail()
-    content = generate_study_material()
-    # 結果をファイルに保存（GitHub ActionsでIssueにするため）
-    with open("result.md", "w", encoding="utf-8") as f:
-        f.write(content)
