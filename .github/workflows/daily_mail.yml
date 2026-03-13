@@ -26,3 +26,10 @@ jobs:
           GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python send_mail.py
+
+      - name: Create Issue from result
+        uses: peter-evans/create-issue-from-file@v4
+        with:
+          title: "📝 本日の応用情報：問題"
+          content-filepath: result.md
+          labels: "daily-study, help wanted"
