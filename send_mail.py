@@ -84,10 +84,10 @@ def send_mail():
     msg = MIMEMultipart()
     msg['From'] = gmail_user
     msg['To'] = to_email
+    msg['Subject'] = "応用情報 学習コンテンツ"
 
     body = generate_study_material()
     msg.attach(MIMEText(body, 'plain'))
-    msg['Subject'] = body.split('\n')[0] if body else "学習コンテンツ"
 
     try:
         # GmailのSMTPサーバーに接続
