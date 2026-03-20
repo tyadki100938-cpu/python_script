@@ -92,7 +92,7 @@ def send_mail():
 
     # 2. YouTubeから関連動画（例：韓国語学習）を取得
     # クエリは自由に変更してください
-    video_content = get_youtube_videos("韓国語学習", max_results=3)
+    video_content = get_youtube_videos("브이로그", max_results=3)
 
     # 3. 本文を結合
     full_body = f"""

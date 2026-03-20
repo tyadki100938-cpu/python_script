@@ -84,7 +84,7 @@ def send_mail():
 
     # 2. YouTubeから関連動画（例：応用情報技術者）を取得
     # クエリは自由に変更してください
-    video_content = get_youtube_videos("応用情報技術者試験 解説", max_results=3)
+    video_content = get_youtube_videos("応用情報", max_results=3)
 
     # 3. 本文を結合
     full_body = f"""
