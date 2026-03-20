@@ -1,7 +1,6 @@
 import smtplib
 import os
 import random
-import datetime
 from google import genai # import文が変わります
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -43,14 +42,22 @@ def get_youtube_videos(query, max_results=3):
     except Exception as e:
         return f"動画の取得中にエラーが発生しました: {e}"
 
+def generate_eiken_pre1_prompt():
+    """
+    英検学習用のプロンプト
+    """
+    prompt = f"""
+トピックを自由に選んで英語を教えて！
+""".strip()
+    
+    return prompt
+
 def generate_study_material():
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         raise ValueError("GEMINI_API_KEY is not set.")
 
-    prompt = f"""
-    トピックを自由に選んで応用情報の勉強を教えて！
-    """
+    prompt = generate_eiken_pre1_prompt()
 
     # 【重要】 vertexai=False を指定することで、
     # Google AI Studio の API キーモードであることを明示します
@@ -77,14 +84,14 @@ def send_mail():
     msg = MIMEMultipart()
     msg['From'] = gmail_user
     msg['To'] = to_email
-    msg['Subject'] = "応用情報 学習コンテンツ"
+    msg['Subject'] = "英語 学習コンテンツ"
 
-        # 1. 従来の学習コンテンツを生成
+    # 1. 従来の学習コンテンツを生成
     study_content = generate_study_material()
 
     # 2. YouTubeから関連動画（例：応用情報技術者）を取得
     # クエリは自由に変更してください
-    video_content = get_youtube_videos("応用情報技術者試験 解説", max_results=3)
+    video_content = get_youtube_videos("英検準１級解説", max_results=3)
 
     # 3. 本文を結合
     full_body = f"""

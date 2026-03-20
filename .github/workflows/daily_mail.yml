@@ -29,11 +29,14 @@ jobs:
           GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-        run: python send_mail.py
+        run: |
+          python send_mail.py
+          python korean_advanced.py
+          python eiken_pre1.py
 
       - name: Create Issue from result
         uses: peter-evans/create-issue-from-file@v4
         with:
-          title: "📝 本日の応用情報：問題"
+          title: "メール履歴"
           content-filepath: result.md
           labels: "daily-study, help wanted"
